@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a89af9c2406328046825fadcb3a0c50d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyType: {fileID: 11400000, guid: d21c025cf1933724eb92024e2d9d77a3, type: 2}
+  EnemyType: {fileID: 11400000, guid: db1ed45a796c1bd418a8893a73bfd0f6, type: 2}
   isEnemy: 0
   showHealth: 0
   myHealthBar: {fileID: 565182903}

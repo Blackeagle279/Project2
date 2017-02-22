@@ -21,6 +21,7 @@ public class EnemyTool : EditorWindow {
     int defence;
     int agility;
     int mana;
+    float attSpeed;
 
     Sprite mySprite;
 
@@ -45,17 +46,6 @@ public class EnemyTool : EditorWindow {
 
 		currentChoice = EditorGUILayout.Popup (currentChoice, enemyNames);
 
-		foreach (Enemies e in enemyList) 
-		{
-
-			EditorGUILayout.LabelField (e.emname);
-
-		}
-
-		if (GUILayout.Button ("Button")) 
-		{
-			getEnemies ();
-		}
 
         mySprite = EditorGUILayout.ObjectField(mySprite, typeof(Sprite), true) as Sprite;
         if (mySprite != null)
@@ -72,6 +62,8 @@ public class EnemyTool : EditorWindow {
         defence = EditorGUILayout.IntSlider(defence, 1, 100);
         EditorGUILayout.LabelField("Agility");
         agility = EditorGUILayout.IntSlider(agility, 1, 100);
+        EditorGUILayout.LabelField("Attack Speed");
+        attSpeed = EditorGUILayout. FloatField(attSpeed);
         myToggle = EditorGUILayout.BeginToggleGroup("Magic User", myToggle);
         EditorGUILayout.LabelField("Mana");
         mana = EditorGUILayout.IntSlider(mana, 1, 100);
@@ -100,13 +92,28 @@ public class EnemyTool : EditorWindow {
 			{
 				//blank out fields for new enemy
 				nameString = "";
+                health = 0;
+                attack = 0;
+                defence = 0;
+                agility = 0;
+                attSpeed = 0;
+                mana = 0;
+                myToggle = false;
+                mySprite = null;
 			}
 			else 
 			{
 				//Load fields with enemy data
 				nameString = enemyList[currentChoice - 1].emname;
 				health = enemyList [currentChoice - 1].health;
-			}
+                attack = enemyList[currentChoice - 1].atk;
+                defence = enemyList[currentChoice - 1].def;
+                agility = enemyList[currentChoice - 1].agi ;
+                attSpeed = enemyList[currentChoice - 1].atkTime;
+                myToggle = enemyList[currentChoice - 1].isMagic;
+                mana = enemyList[currentChoice - 1].manaPool;
+                mySprite = enemyList[currentChoice - 1].mySprite;
+            }
 			lastChoice = currentChoice;
 
 		} 
@@ -167,9 +174,16 @@ public class EnemyTool : EditorWindow {
 
 	private void alterEnemy()
 	{
+        enemyList[0].emname = nameString;
+        enemyList[0].mySprite = mySprite;
+		enemyList[0].health = health;
+        enemyList[0].atk = attack;
+        enemyList[0].def = defence;
+        enemyList[0].agi = agility;
+        enemyList[0].atkTime = health;
+        enemyList[0].manaPool = mana;
 
-		enemyList [0].health = health;
 
-	}
+    }
 
 }
