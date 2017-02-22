@@ -164,6 +164,7 @@ public class EnemyTool : EditorWindow {
 		{
 
 			nameFlag = true;
+            return;
 
 		}
 		else
@@ -187,6 +188,7 @@ public class EnemyTool : EditorWindow {
         {
 
             spriteFlag = true;
+            return;
 
         }
         else
@@ -202,7 +204,7 @@ public class EnemyTool : EditorWindow {
             myEnemy.isMagic = myToggle;
             myEnemy.mySprite = mySprite;
             AssetDatabase.CreateAsset(myEnemy, "Assets/Resources/Data/EnemyData/" + myEnemy.emname.Replace(" ", "_") + ".asset");
-            nameFlag = false;
+            spriteFlag = false;
             getEnemies();
         }
 
@@ -212,15 +214,16 @@ public class EnemyTool : EditorWindow {
 
 	private void alterEnemy()
 	{
-        enemyList[0].emname = nameString;
-        enemyList[0].mySprite = mySprite;
-		enemyList[0].health = health;
-        enemyList[0].atk = attack;
-        enemyList[0].def = defence;
-        enemyList[0].agi = agility;
-        enemyList[0].atkTime = health;
-        enemyList[0].manaPool = mana;
+        enemyList[currentChoice -1].emname = nameString;
+        enemyList[currentChoice -1].mySprite = mySprite;
+		enemyList[currentChoice - 1].health = health;
+        enemyList[currentChoice - 1].atk = attack;
+        enemyList[currentChoice - 1].def = defence;
+        enemyList[currentChoice - 1].agi = agility;
+        enemyList[currentChoice - 1].atkTime = attSpeed;
+        enemyList[currentChoice - 1].manaPool = mana;
 
+        AssetDatabase.SaveAssets();
 
     }
 
