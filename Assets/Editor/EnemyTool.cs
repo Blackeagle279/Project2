@@ -11,6 +11,7 @@ public class EnemyTool : EditorWindow {
 	string nameString;
 
 	bool nameFlag;
+    bool spriteFlag;
 
 	string[] enemyNames;
 
@@ -21,7 +22,7 @@ public class EnemyTool : EditorWindow {
     int defence;
     int agility;
     int mana;
-    float attSpeed;
+    float attSpeed = 1;
 
     Sprite mySprite;
 
@@ -72,8 +73,15 @@ public class EnemyTool : EditorWindow {
 		{
 		
 			EditorGUILayout.HelpBox ("Name can not be blank", MessageType.Error);
-
-		}
+        }
+        if(spriteFlag)
+        {
+            EditorGUILayout.HelpBox("Sprite can not be blank", MessageType.Error);
+        }
+        if(attSpeed < 1 || attSpeed > 20)
+        {
+            EditorGUILayout.HelpBox("Attack speed needs to be within 1-20", MessageType.Error);
+        }
 		if (currentChoice == 0) {
 			if (GUILayout.Button ("Create")) 
 			{
@@ -96,7 +104,7 @@ public class EnemyTool : EditorWindow {
                 attack = 0;
                 defence = 0;
                 agility = 0;
-                attSpeed = 0;
+                attSpeed = 1;
                 mana = 0;
                 myToggle = false;
                 mySprite = null;
@@ -163,14 +171,44 @@ public class EnemyTool : EditorWindow {
 			
 			Enemies myEnemy = ScriptableObject.CreateInstance<Enemies> ();
 			myEnemy.emname = nameString;
-			AssetDatabase.CreateAsset(myEnemy, "Assets/Resources/Data/EnemyData/"+myEnemy.emname.Replace(" ", "_")+".asset");
+            myEnemy.atk = attack;
+            myEnemy.def = defence;
+            myEnemy.agi = agility;
+            myEnemy.atkTime = attSpeed;
+            myEnemy.manaPool = mana;
+            myEnemy.isMagic = myToggle;
+            myEnemy.mySprite = mySprite;
+            AssetDatabase.CreateAsset(myEnemy, "Assets/Resources/Data/EnemyData/"+myEnemy.emname.Replace(" ", "_")+".asset");
 			nameFlag = false;
 			getEnemies ();
 		}
 
+        if (mySprite == null)
+        {
+
+            spriteFlag = true;
+
+        }
+        else
+        {
+
+            Enemies myEnemy = ScriptableObject.CreateInstance<Enemies>();
+            myEnemy.emname = nameString;
+            myEnemy.atk = attack;
+            myEnemy.def = defence;
+            myEnemy.agi = agility;
+            myEnemy.atkTime = attSpeed;
+            myEnemy.manaPool = mana;
+            myEnemy.isMagic = myToggle;
+            myEnemy.mySprite = mySprite;
+            AssetDatabase.CreateAsset(myEnemy, "Assets/Resources/Data/EnemyData/" + myEnemy.emname.Replace(" ", "_") + ".asset");
+            nameFlag = false;
+            getEnemies();
+        }
 
 
-	}
+
+    }
 
 	private void alterEnemy()
 	{
